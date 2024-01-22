@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "brandName": "Toyota",
+    "image": "https://i.ibb.co/TRR5NYt/krish-parmar-Pm-Sw-Fm4-Lw1c-unsplash.jpg"
+  },
+  {
+    "id": 2,
+    "brandName": "Hyundai",
+    "image": "https://i.ibb.co/Fbsk5zh/raphael-maksian-l-Zp73a6-a-K0-unsplash.jpg"
+  },
+  {
+    "id": 3,
+    "brandName": "Suzuki",
+    "image": "https://i.ibb.co/tDtJQ33/eugene-chystiakov-Kiz-WQ2wk0tk-unsplash.jpg"
+  },
+  {
+    "id": 4,
+    "brandName": "Ford",
+    "image": "https://i.ibb.co/7Sm8XHc/fourfour-G3-Irirjfl8s-unsplash.jpg"
+  },
+  {
+    "id": 5,
+    "brandName": "Honda",
+    "image": "https://i.ibb.co/74qnxfM/r-nolan-1-Zh-Zp-P91ol-Q-unsplash.jpg"
+  },
+  {
+    "id": 6,
+    "brandName": "Tata",
+    "image": "https://i.ibb.co/fGLvQvn/goutham-binuraj-aj-Hq-Mo-OM7t8-unsplash.jpg"
+  }
+]
