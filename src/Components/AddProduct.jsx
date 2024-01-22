@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 
 
 const AddProduct = () => {
@@ -24,7 +25,16 @@ const AddProduct = () => {
       body: JSON.stringify(product),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        Swal.fire({
+          title: "Success!",
+          text: "You added a product to view",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      });
+    form.reset()
   }
 
   return (

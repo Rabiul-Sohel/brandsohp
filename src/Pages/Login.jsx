@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 
 const Login = () => {
@@ -15,12 +16,19 @@ const Login = () => {
     console.log(email, password);
     userLogin(email, password)
       .then(() => {
-        nevigate(location.state)
+        if (location.state) {
+          nevigate(location.state)
+        
+        } else {
+          nevigate('/')
+        }
+        toast("You logged in successfully");
       })
       .catch(err => console.log(err))
   }
   return (
     <div className="hero min-h-screen bg-base-200">
+      <Toaster></Toaster>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
@@ -65,7 +73,12 @@ const Login = () => {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
-          <p className="p-5 text-center">New to this site? Please <Link to='/signup' className="text-blue-500 font-bold">Register</Link> </p>
+          <p className="p-5 text-center">
+            New to this site? Please{" "}
+            <Link to="/signup" className="text-blue-500 font-bold">
+              Register
+            </Link>{" "}
+          </p>
         </div>
       </div>
     </div>
