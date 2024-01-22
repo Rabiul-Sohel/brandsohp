@@ -10,7 +10,7 @@ const Products = () => {
   return (
     <div className="my-10">
       <div>
-        <h2 className="my-6">Toyota: {toyotas.length} </h2>
+        <h2 className="my-6 text-2xl font-semibold">Toyota: {toyotas.length} </h2>
         <div className="grid grid-cols-3 gap-5 mx-auto">
           {toyotas.map((toyota) => (
             <Product key={toyota._id}>{toyota}</Product>
@@ -18,7 +18,7 @@ const Products = () => {
         </div>
       </div>
       <div>
-        <h2 className="my-6">Tata: {tatas.length} </h2>
+        <h2 className="my-6 text-2xl font-semibold">Tata: {tatas.length} </h2>
         <div className="grid grid-cols-3 gap-5">
           {tatas.map((tata) => (
             <Product key={tata._id}>{tata}</Product>

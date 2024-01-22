@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types'
 
 
 const BrandCard = ({ brand }) => {
-  const {id, brandName, image} = brand
+  const { brandName, image} = brand
   return (
-    <Link className="card card-compact w-96 bg-base-100 shadow-xl">
+    <Link to={`/brand/${brandName}`} className="card card-compact w-96 bg-base-100 shadow-xl hover:bg-slate-800">
       <figure>
         <img className="h-64 w-full"
           src={image}
@@ -20,3 +21,7 @@ const BrandCard = ({ brand }) => {
 };
 
 export default BrandCard;
+
+BrandCard.propTypes = {
+  brand: PropTypes.object
+}
