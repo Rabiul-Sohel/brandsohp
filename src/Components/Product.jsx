@@ -1,23 +1,24 @@
+import { Link } from "react-router-dom";
 
 
 const Product = ({ children }) => {
+  console.log(children);
   
-  const {photo, model, brand, price, description} = children
+  const {_id, photo, model, brand, price, description} = children
   return (
     <div className="card  bg-base-100 shadow-xl">
       <figure>
-        <img
-          src={photo}
-          alt="Shoes"
-        />
+        <img className="h-[200px] w-full" src={photo} alt="Shoes" />
       </figure>
       <div className="card-body">
         <h2> {brand} </h2>
         <h2 className="card-title">Model: {model} </h2>
-        <p> {description.slice(0,100)} </p>
-        <p> Price:  {price} </p>
+        <p> {description.slice(0, 100)} </p>
+        <p> Price: {price} </p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+          <Link to={`/product/${_id}`}>
+            <button className="btn btn-primary">Details</button>
+          </Link>
         </div>
       </div>
     </div>
