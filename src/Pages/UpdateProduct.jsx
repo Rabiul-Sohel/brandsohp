@@ -1,10 +1,13 @@
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
-const AddProduct = () => {
-
-  const handleAddProduct = e => {
-    e.preventDefault()
+const UpdateProduct = () => {
+  const product = useLoaderData()
+  const {_id, brand, model, price, rating, description, category, photo }= product
+  
+  const handleUpdateProduct = (e) => {
+    e.preventDefault();
     const form = e.target;
     const brand = form.brand.value;
     const model = form.model.value;
@@ -14,11 +17,17 @@ const AddProduct = () => {
     const photo = form.photo.value;
     const description = form.description.value;
     const product = {
-      brand, model, price, category, rating, photo, description 
-    }
-    
-    fetch("http://localhost:5000/products", {
-      method: "POST",
+      brand,
+      model,
+      price,
+      category,
+      rating,
+      photo,
+      description,
+    };
+   
+    fetch(`http://localhost:5000/product/${_id}`, {
+      method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
@@ -26,23 +35,22 @@ const AddProduct = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.insertedId) {
-         Swal.fire({
-           title: "Success!",
-           text: "You added a product to view",
-           icon: "success",
-           confirmButtonText: "OK",
-         });
-       }
-         
+        if (data.modifiedCount > 0) {
+          Swal.fire({
+            title: "Success!",
+            text: "You updated a product",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        }
+          
       });
-    form.reset()
-  }
-
+    form.reset();
+  };
   return (
     <div>
-      <h2 className="text-3xl font-bold text-center py-6">Add Product</h2>
-      <form onSubmit={handleAddProduct} className="grid grid-cols-2 gap-5">
+      <h2 className="text-3xl font-bold text-center py-6">Update Product</h2>
+      <form onSubmit={handleUpdateProduct} className="grid grid-cols-2 gap-5 mb-5">
         {/* field One */}
         <div className="form-control">
           <label className="label">
@@ -50,6 +58,7 @@ const AddProduct = () => {
           </label>
           <input
             type="text"
+            defaultValue={brand}
             name="brand"
             placeholder="brand"
             className="input input-bordered"
@@ -63,6 +72,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="model"
+            defaultValue={model}
             placeholder="Model"
             className="input input-bordered"
           />
@@ -76,6 +86,7 @@ const AddProduct = () => {
             type="text"
             name="price"
             placeholder="price"
+            defaultValue={price}
             className="input input-bordered"
           />
         </div>
@@ -87,6 +98,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="category"
+            defaultValue={category}
             placeholder="Category"
             className="input input-bordered"
           />
@@ -99,6 +111,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="rating"
+            defaultValue={rating}
             placeholder="Rating"
             className="input input-bordered"
           />
@@ -111,6 +124,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="photo"
+            defaultValue={photo}
             placeholder="Photo URL"
             className="input input-bordered"
           />
@@ -123,16 +137,17 @@ const AddProduct = () => {
           <textarea
             type="text"
             name="description"
+            defaultValue={description}
             placeholder="Short Description here"
             className="input input-bordered"
           />
         </div>
         <div className="w-full col-span-2 flex justify-center">
-          <input type="submit" className="btn" value="Add Product" />
+          <input type="submit" className="btn btn-primary" value="Update" />
         </div>
       </form>
     </div>
   );
 };
 
-export default AddProduct;
+export default UpdateProduct;

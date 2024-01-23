@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
 
 const ProductDetails = () => {
@@ -22,9 +22,9 @@ const ProductDetails = () => {
           <p>Rating: {rating} </p>
         </div>
         <p> {description} </p>
-        <div className="flex justify-end">
-          <button className="btn">Add to cart</button>
-        </div>
+        <Link className="flex justify-end">
+          <button className="btn mt-5 mx-auto">Add to cart</button>
+        </Link>
       </div>
     </div>
   );

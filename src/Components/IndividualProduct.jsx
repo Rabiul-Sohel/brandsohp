@@ -67,7 +67,7 @@ const IndividualProduct = ({ product, brandProducts, setBrandProducts }) => {
             </button>
           )}
           {user && (
-            <Link>
+            <Link to={`/product/update/${_id}`}>
               <button className="btn btn-primary">Update</button>
             </Link>
           )}
