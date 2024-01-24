@@ -26,7 +26,7 @@ const IndividualBrands = () => {
           <div className="carousel w-full h-screen py-10">
             {brandProducts.map((product, idx) => (
               <div
-                key={product.id}
+                key={product._id}
                 id={`slide${idx}`}
                 className="carousel-item relative w-full"
               >
@@ -53,12 +53,12 @@ const IndividualBrands = () => {
             {brand} : {brandProducts.length}{" "}
           </h2>
           <div className="grid grid-cols-3 gap-5">
-            {brandProducts.map((product) => (
+            {brandProducts.map((product, idx) => (
               <IndividualProduct
                 product={product}
                 brandProducts={brandProducts}
                 setBrandProducts={setBrandProducts}
-                key={product._id}
+                key={idx}
               ></IndividualProduct>
             ))}
           </div>

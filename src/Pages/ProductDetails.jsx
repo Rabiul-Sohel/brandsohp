@@ -1,14 +1,54 @@
+import { useContext, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { CartContext } from "../Layouts/MainLayout";
 
 
 const ProductDetails = () => {
-  const product = useLoaderData()
+  const loadedProduct = useLoaderData()
   const nevigate = useNavigate()
-  const { _id, brand, model, price, photo, description, rating } = product;
+  const {cartProducts, setCartProducts} = useContext(CartContext)
+  
+  const { _id, brand, model, price, photo, description, rating } = loadedProduct;
+  // console.log(cartProducts, _id);
   const goBack = () => {
     nevigate(`/brand/${brand}`);
   }
+  const handleAddToCart = (model) => {
+    const findInCart = cartProducts.find(product => product.model === model)
+   console.log(findInCart);
+    if (findInCart) {
+       Swal.fire({
+         title: "Error!",
+         text: "Your product already in cart",
+         icon: "error",
+         confirmButtonText: "OK",
+       });
+     
+    } else {
+       fetch("http://localhost:5000/cart", {
+         method: "POST",
+         headers: {
+           "content-type": "application/json",
+         },
+         body: JSON.stringify(loadedProduct),
+       })
+         .then((res) => res.json())
+         .then((data) => {
+           if (data.insertedId) {
+             setCartProducts(...cartProducts, loadedProduct)
+             Swal.fire({
+               title: "Success",
+               text: "Your Product is added to Cart",
+               icon: "success",
+               confirmButtonText: "Cool",
+             });
+           }
+         });
+     
+    }
   
+  }
   return (
     <div>
       <button onClick={goBack} className="text-4xl font-bold mb-5 ml-20 btn">{brand}</button>
@@ -22,9 +62,9 @@ const ProductDetails = () => {
           <p>Rating: {rating} </p>
         </div>
         <p> {description} </p>
-        <Link className="flex justify-end">
-          <button className="btn mt-5 mx-auto">Add to cart</button>
-        </Link>
+        
+          <button onClick={()=>handleAddToCart(model)} className="btn mt-5 mx-auto">Add to cart</button>
+        
       </div>
     </div>
   );

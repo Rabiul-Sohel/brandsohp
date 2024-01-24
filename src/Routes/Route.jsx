@@ -9,12 +9,14 @@ import PrivateRoute from "./PrivateRoute";
 import IndividualBrands from "../Components/IndividualBrands";
 import ProductDetails from "../Pages/ProductDetails";
 import UpdateProduct from "../Pages/UpdateProduct";
+import Cart from "../Pages/Cart";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    loader: () => fetch("http://localhost:5000/cart"),
     children: [
       {
         path: "/",
@@ -66,6 +68,15 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/product/${params.id}`),
+      },
+      {
+        path: "/cart",
+        element: (
+          <PrivateRoute>
+            <Cart></Cart>
+          </PrivateRoute>
+        ),
+        
       },
     ],
   },
