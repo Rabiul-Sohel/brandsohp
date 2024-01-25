@@ -6,8 +6,13 @@ export const  CartContext = createContext(null)
 const MainLayout = () => {
   const loadedCartProducts = useLoaderData()
   const [cartProducts, setCartProducts] = useState(loadedCartProducts);
+   const priceArray = cartProducts.map((product) => parseInt(product.price));
+   const totalPrice = priceArray.reduce((x, y) => x + y);
+  
   const cartInfo = {
-    cartProducts, setCartProducts
+    cartProducts,
+    setCartProducts,
+    totalPrice
   }
   return (
     <CartContext.Provider value={cartInfo}>

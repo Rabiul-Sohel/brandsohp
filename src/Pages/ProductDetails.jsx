@@ -7,10 +7,11 @@ import { CartContext } from "../Layouts/MainLayout";
 const ProductDetails = () => {
   const loadedProduct = useLoaderData()
   const nevigate = useNavigate()
-  const {cartProducts, setCartProducts} = useContext(CartContext)
+  const { cartProducts, setCartProducts } = useContext(CartContext)
+ 
   
   const { _id, brand, model, price, photo, description, rating } = loadedProduct;
-  // console.log(cartProducts, _id);
+  console.log(cartProducts, _id);
   const goBack = () => {
     nevigate(`/brand/${brand}`);
   }
@@ -36,7 +37,9 @@ const ProductDetails = () => {
          .then((res) => res.json())
          .then((data) => {
            if (data.insertedId) {
-             setCartProducts(...cartProducts, loadedProduct)
+             const newProducts = [...cartProducts, loadedProduct]
+             setCartProducts(newProducts)
+             
              Swal.fire({
                title: "Success",
                text: "Your Product is added to Cart",
