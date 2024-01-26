@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { useContext} from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { CartContext } from "../Layouts/MainLayout";
 
@@ -10,8 +10,8 @@ const ProductDetails = () => {
   const { cartProducts, setCartProducts } = useContext(CartContext)
  
   
-  const { _id, brand, model, price, photo, description, rating } = loadedProduct;
-  console.log(cartProducts, _id);
+  const {  brand, model, price, photo, description, rating } = loadedProduct;
+ 
   const goBack = () => {
     nevigate(`/brand/${brand}`);
   }

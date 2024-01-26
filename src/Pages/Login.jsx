@@ -7,13 +7,13 @@ const Login = () => {
   const { userLogin } = useAuth()
   const location = useLocation()
   const nevigate = useNavigate()
-  console.log(location);
+  
   const handleLogin = e => {
     e.preventDefault()
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    
     userLogin(email, password)
       .then(() => {
         if (location.state) {
@@ -24,7 +24,11 @@ const Login = () => {
         }
         toast("You logged in successfully");
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        if (err.message === "Firebase: Error (auth/invalid-credential).") {
+          toast("Your Email or password is wrong");
+        }
+      })
   }
   return (
     <div className="hero min-h-screen bg-base-200">

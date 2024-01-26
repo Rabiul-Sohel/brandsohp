@@ -1,19 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 
 const SignUp = () => {
-  const {createUser} = useAuth()
+  const { createUser } = useAuth()
+  const navigate = useNavigate()
   const handleSignIn = e => {
     e.preventDefault()
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    
     createUser(email, password)
-      .then(res => console.log(res.user))
-      .catch(err => console.log(err))    
+      .then(() => {
+        const user = {email, password, name}
+        fetch("http://localhost:5000/users", {
+          method: "post",
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.insertedId) {
+              Swal.fire({
+                title: "Success!",
+                text: "You registered successfully",
+                icon: "success",
+                confirmButtonText: "Cool",
+              });
+              
+            }
+          })
+        
+        navigate('/')
+
+      })
+      .catch(() => {
+        toast('You are aready registered with this email');
+      })  
+    
   }
   return (
     <div className="hero min-h-screen bg-base-200">

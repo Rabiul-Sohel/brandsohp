@@ -3,10 +3,12 @@ import useAuth from "../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { useContext } from "react";
 import { CartContext } from "../../Layouts/MainLayout";
+import Swal from "sweetalert2";
 
 const Header = () => {
-  const { user, userLogout } = useAuth()
-  const  {cartProducts, totalPrice}  = useContext(CartContext)
+  const { user, userLogout, userDelete } = useAuth()
+  const { cartProducts, totalPrice } = useContext(CartContext)
+  
  
   
   const navs =
@@ -30,6 +32,41 @@ const Header = () => {
         toast("You logged out successfully")
       })
   }
+  const handleUserDelete = () => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          userDelete()
+            .then(() => {
+              fetch(`http://localhost:5000/user/${user?.email}`, {
+                method: "delete",
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  if (data.deletedCount > 0) {
+                     Swal.fire({
+                       title: "Deleted!",
+                       text: "Your file has been deleted.",
+                       icon: "success",
+                     });
+                  }
+                });
+            })
+            .catch((err) => console.log(err));
+         
+        }
+      });
+    
+  }
+ 
+
   return (
     <div className="navbar bg-base-100">
       <Toaster></Toaster>
@@ -139,7 +176,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <button onClick={handleUserDelete}>Unregister</button>
                 </li>
                 <li>
                   <button onClick={handleLogout}>Logout</button>
