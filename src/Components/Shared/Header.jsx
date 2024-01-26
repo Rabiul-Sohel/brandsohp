@@ -43,23 +43,25 @@ const Header = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          userDelete()
-            .then(() => {
-              fetch(`http://localhost:5000/user/${user?.email}`, {
-                method: "delete",
-              })
-                .then((res) => res.json())
-                .then((data) => {
-                  if (data.deletedCount > 0) {
+           fetch(`http://localhost:5000/user/${user?.email}`, {
+             method: "delete",
+           })
+             .then((res) => res.json())
+             .then((data) => {
+               if (data.deletedCount > 0) {
+                 userDelete()
+                   .then(() => {
                      Swal.fire({
                        title: "Deleted!",
                        text: "Your file has been deleted.",
                        icon: "success",
                      });
-                  }
-                });
-            })
-            .catch((err) => console.log(err));
+                   })
+                   .catch((err) => console.log(err));
+                 
+               }
+             });
+          
          
         }
       });

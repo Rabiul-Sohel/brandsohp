@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -7,28 +7,89 @@ const Login = () => {
   const { userLogin } = useAuth()
   const location = useLocation()
   const nevigate = useNavigate()
+  const loadedUser = useLoaderData()
+ 
   
   const handleLogin = e => {
     e.preventDefault()
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+    const validUser = loadedUser.find(user => user.email === email || user.password === password) 
+    if (!validUser) {
+      toast('Your email and password is wrong')
+      return
+    }
+    else if (validUser?.email !== email && validUser.password === password) {
+      toast('wrong email')
+      return
+    } else if (validUser.email === email && validUser.password !== password) {
+      toast('wrong password')
+      return
+    } else {
+        userLogin(email, password)
+          .then(() => {
+            if (location.state) {
+              nevigate(location.state);
+            } else {
+              nevigate("/");
+            }
+            toast("You logged in successfully");
+          })
+          .catch((err) => {
+            if (err.message === "Firebase: Error (auth/invalid-credential).") {
+              toast("Your Email or password is wrong");
+            }
+          })
+     
+     
+    } 
+    // const passwords = loadedUser.map(user => user.password)
+    // const validPassword = passwords.includes(password)
+    // const emails = loadedUser.map((user) => user.email);
+    // const validEmail = emails.includes(email)
+    // if (!validEmail && validPassword) {
+    //   toast('wrong email')
+    //   return
+    // } else if (validEmail && !validPassword) {
+    //   toast('wrong password')
+    // } else if (validEmail && validPassword) {
+    //   userLogin(email, password)
+    //     .then(() => {
+    //       if (location.state) {
+    //         nevigate(location.state)
+    //       } else {
+    //         nevigate('/')
+    //       }
+    //       toast("You logged in successfully");
+    //     })
+    //     .catch(err => {
+    //       if (err.message === "Firebase: Error (auth/invalid-credential).") {
+    //         toast("Your Email or password is wrong");
+    //       }
+    //     })
+    // } else {
+    //   toast('wrong email and password')
+    // }
+
     
-    userLogin(email, password)
-      .then(() => {
-        if (location.state) {
-          nevigate(location.state)
+    
+    
+    // userLogin(email, password)
+    //   .then(() => {
+    //     if (location.state) {
+    //       nevigate(location.state)
         
-        } else {
-          nevigate('/')
-        }
-        toast("You logged in successfully");
-      })
-      .catch(err => {
-        if (err.message === "Firebase: Error (auth/invalid-credential).") {
-          toast("Your Email or password is wrong");
-        }
-      })
+    //     } else {
+    //       nevigate('/')
+    //     }
+    //     toast("You logged in successfully");
+    //   })
+    //   .catch(err => {
+    //     if (err.message === "Firebase: Error (auth/invalid-credential).") {
+    //       toast("Your Email or password is wrong");
+    //     }
+    //   })
   }
   return (
     <div className="hero min-h-screen bg-base-200">

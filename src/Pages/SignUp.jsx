@@ -13,36 +13,35 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    
-    createUser(email, password)
-      .then(() => {
-        const user = {email, password, name}
-        fetch("http://localhost:5000/users", {
-          method: "post",
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.insertedId) {
+    const user = { email, password, name };
+    fetch("http://localhost:5000/users", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          createUser(email, password)
+            .then(() => {
               Swal.fire({
                 title: "Success!",
                 text: "You registered successfully",
                 icon: "success",
                 confirmButtonText: "Cool",
               });
-              
-            }
-          })
-        
-        navigate('/')
+            })
+            .catch(() => {
+              toast("You are aready registered with this email");
+            });  
+          
+        }
+      });
 
-      })
-      .catch(() => {
-        toast('You are aready registered with this email');
-      })  
+    navigate("/");
+    
     
   }
   return (
