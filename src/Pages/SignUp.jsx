@@ -13,6 +13,18 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    if (password.length < 6) {
+      toast('Your Password must be 6 or longer')
+      return
+    }
+    if (!/(?=.*?[A-Z])/.test(password)) {
+      toast('Your password must have one capital letter')
+      return
+    }
+    if (!/(?=.*?[!?#$%^&*@-])/.test(password)) {
+      toast('Your password must have one special character')
+      return
+    }
     const user = { email, password, name };
     fetch("http://localhost:5000/users", {
       method: "post",

@@ -1,10 +1,11 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
 const UpdateProduct = () => {
   const product = useLoaderData()
-  const {_id, brand, model, price, rating, description, category, photo }= product
+  const { _id, brand, model, price, rating, description, category, photo } = product
+  const navigate = useNavigate()
   
   const handleUpdateProduct = (e) => {
     e.preventDefault();
@@ -46,6 +47,7 @@ const UpdateProduct = () => {
           
       });
     form.reset();
+    navigate(`/brand/${brand}`);
   };
   return (
     <div>

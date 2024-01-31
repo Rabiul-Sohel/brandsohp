@@ -1,7 +1,7 @@
 import { useLoaderData, useParams } from "react-router-dom";
 
 import IndividualProduct from "./IndividualProduct";
-import Product from "./Product";
+
 import { useState } from "react";
 
 
@@ -12,7 +12,7 @@ const IndividualBrands = () => {
   
   
   return (
-    <div>
+    <div className="my-10">
       {brandProducts.length === 0 ? (
         <div className="flex min-h-[70vh] justify-center items-center ">
           <div>
