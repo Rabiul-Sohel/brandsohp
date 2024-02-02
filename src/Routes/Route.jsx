@@ -10,12 +10,14 @@ import IndividualBrands from "../Components/IndividualBrands";
 import ProductDetails from "../Pages/ProductDetails";
 import UpdateProduct from "../Pages/UpdateProduct";
 import Cart from "../Pages/Cart";
+import ErrorPage from "../Pages/ErrorPage";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     loader: () => fetch("http://localhost:5000/cart"),
     children: [
       {
